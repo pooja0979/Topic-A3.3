@@ -2,97 +2,82 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>IB DP CS – SQL Interactive Notes</title>
+<title>IB DP CS – Complete SQL Learning Module</title>
 
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Patrick+Hand&family=Indie+Flower&display=swap');
 
-body {
-    font-family: 'Patrick Hand', cursive;
-    margin: 0;
-    padding: 20px;
-    transition: 0.4s;
-    background: #f4efe6;
+body{
+font-family:'Patrick Hand', cursive;
+margin:0;
+padding:20px;
+background:#f5efe6;
+transition:0.4s;
 }
 
-.dark {
-    background: #1e1e1e;
-    color: white;
+.dark{background:#1e1e1e;color:white;}
+
+.page{
+background:white;
+padding:40px;
+margin:40px auto;
+max-width:1100px;
+border-radius:15px;
+box-shadow:0 8px 20px rgba(0,0,0,0.2);
+animation:fadeIn 0.8s ease;
 }
 
-.page {
-    background: white;
-    padding: 30px;
-    margin: 40px auto;
-    max-width: 1000px;
-    border-radius: 15px;
-    box-shadow: 0 8px 20px rgba(0,0,0,0.15);
-    animation: fadeIn 1s ease;
+.dark .page{background:#2b2b2b;}
+
+h1{font-family:'Indie Flower';text-align:center;font-size:40px;}
+h2{color:#2980b9;border-bottom:2px solid #3498db;padding-bottom:5px;}
+
+.code{
+background:#272822;
+color:#f8f8f2;
+padding:15px;
+border-radius:8px;
+font-family:monospace;
+overflow-x:auto;
 }
 
-.dark .page {
-    background: #2b2b2b;
+table{
+width:100%;
+border-collapse:collapse;
+margin-top:10px;
+}
+th,td{
+border:1px solid #333;
+padding:8px;
+text-align:left;
 }
 
-h1 {
-    text-align: center;
-    font-family: 'Indie Flower', cursive;
-    font-size: 42px;
+button{
+padding:10px 15px;
+margin:10px 5px;
+background:#3498db;
+border:none;
+color:white;
+border-radius:8px;
+cursor:pointer;
 }
 
-button {
-    padding: 10px 20px;
-    margin: 10px;
-    border: none;
-    border-radius: 8px;
-    background: #3498db;
-    color: white;
-    cursor: pointer;
+button:hover{background:#2980b9;}
+
+.quiz-option{
+padding:8px;
+background:#ecf0f1;
+margin:5px 0;
+border-radius:6px;
+cursor:pointer;
 }
 
-button:hover {
-    background: #2980b9;
-}
+.correct{background:#2ecc71 !important;color:white;}
+.wrong{background:#e74c3c !important;color:white;}
 
-.code {
-    background: #272822;
-    color: #f8f8f2;
-    padding: 15px;
-    border-radius: 8px;
-    font-family: monospace;
-}
-
-.quiz-option {
-    display: block;
-    margin: 8px 0;
-    padding: 8px;
-    background: #ecf0f1;
-    border-radius: 6px;
-    cursor: pointer;
-}
-
-.correct { background: #2ecc71 !important; color:white;}
-.wrong { background: #e74c3c !important; color:white;}
-
-.draggable {
-    padding: 10px;
-    margin: 5px;
-    background: #f39c12;
-    border-radius: 5px;
-    display: inline-block;
-    cursor: grab;
-}
-
-.dropzone {
-    margin-top: 15px;
-    padding: 20px;
-    border: 2px dashed #333;
-    min-height: 50px;
-}
-
-@keyframes fadeIn {
-    from {opacity:0; transform: translateY(20px);}
-    to {opacity:1; transform: translateY(0);}
+@keyframes fadeIn{
+from{opacity:0;transform:translateY(20px);}
+to{opacity:1;transform:translateY(0);}
 }
 </style>
 </head>
@@ -102,123 +87,205 @@ button:hover {
 <button onclick="toggleDark()">🌙 Toggle Dark Mode</button>
 
 <div class="page">
-<h1>📘 Interactive SQL Notes</h1>
-<p style="text-align:center;">IB DP Computer Science – A3.3</p>
+<h1>IB DP Computer Science – SQL Complete Beginner Guide</h1>
+<p style="text-align:center;">A3.3 Structured Step-By-Step Learning</p>
 </div>
 
-<!-- QUIZ SECTION -->
+<!-- STEP 1 SQL LANGUAGE TYPES -->
 <div class="page">
-<h2>🎯 Interactive Quiz</h2>
+<h2>STEP 1: SQL Language Types</h2>
 
-<p><b>Which SQL command retrieves data?</b></p>
-
-<div class="quiz-option" onclick="checkAnswer(this,false)">UPDATE</div>
-<div class="quiz-option" onclick="checkAnswer(this,true)">SELECT</div>
-<div class="quiz-option" onclick="checkAnswer(this,false)">DELETE</div>
-
-<p id="quizResult"></p>
+<h3>DDL – Data Definition Language</h3>
+<p>Used to define structure.</p>
+<div class="code">
+CREATE DATABASE School;
+CREATE TABLE Students (ID INT, Name VARCHAR(50));
+DROP TABLE Students;
+ALTER TABLE Students ADD Grade INT;
 </div>
 
-<!-- DRAG AND DROP -->
+<h3>DML – Data Manipulation Language</h3>
+<div class="code">
+INSERT INTO Students VALUES (1,'Ali');
+UPDATE Students SET Name='Sara' WHERE ID=1;
+DELETE FROM Students WHERE ID=1;
+</div>
+
+<h3>DQL – Data Query Language</h3>
+<div class="code">
+SELECT * FROM Students;
+</div>
+
+<h3>DCL – Data Control Language</h3>
+<div class="code">
+GRANT SELECT ON Students TO user1;
+</div>
+
+<h3>TCL – Transaction Control Language</h3>
+<div class="code">
+BEGIN TRANSACTION;
+COMMIT;
+ROLLBACK;
+</div>
+</div>
+
+<!-- STEP 2 CREATE DATABASE -->
 <div class="page">
-<h2>🧩 Drag & Drop SQL Builder</h2>
+<h2>STEP 2: Creating Database & Tables</h2>
 
-<p>Build a correct SELECT query:</p>
+<h3>Create Database</h3>
+<div class="code">
+CREATE DATABASE School;
+</div>
 
-<div class="draggable" draggable="true">SELECT</div>
-<div class="draggable" draggable="true">FROM Students</div>
-<div class="draggable" draggable="true">*</div>
+<h3>Create Table WITHOUT Constraints</h3>
+<div class="code">
+CREATE TABLE Students(
+ID INT,
+Name VARCHAR(50),
+Age INT
+);
+</div>
 
-<div class="dropzone" ondrop="drop(event)" ondragover="allowDrop(event)">
-Drop SQL here
+<h3>Create Table WITH Constraints</h3>
+<div class="code">
+CREATE TABLE Students(
+ID INT PRIMARY KEY,
+Name VARCHAR(50) NOT NULL,
+Age INT CHECK (Age > 0)
+);
+</div>
+
+<h3>Modify Table</h3>
+<div class="code">
+ALTER TABLE Students ADD Email VARCHAR(100);
+ALTER TABLE Students DROP Age;
+</div>
+
+<h3>Delete Table</h3>
+<div class="code">
+DROP TABLE Students;
 </div>
 </div>
 
-<!-- AGGREGATE DEMO -->
+<!-- STEP 3 QUERIES -->
 <div class="page">
-<h2>📊 Aggregate Function Demo</h2>
+<h2>STEP 3: Queries (Detailed)</h2>
+
+<h3>Basic SELECT</h3>
+<div class="code">
+SELECT Name FROM Students;
+</div>
+
+<h3>WHERE Clause</h3>
+<div class="code">
+SELECT * FROM Students WHERE Age > 16;
+</div>
+
+<h3>ORDER BY</h3>
+<div class="code">
+SELECT * FROM Students ORDER BY Name ASC;
+</div>
+
+<h3>JOIN Example</h3>
+
+<div class="code">
+SELECT Students.Name, Enrollments.Course
+FROM Students
+INNER JOIN Enrollments
+ON Students.ID = Enrollments.StudentID;
+</div>
+
+<h3>Types of JOIN</h3>
+<ul>
+<li>INNER JOIN</li>
+<li>LEFT JOIN</li>
+<li>RIGHT JOIN</li>
+<li>FULL JOIN</li>
+</ul>
+</div>
+
+<!-- STEP 4 AGGREGATES -->
+<div class="page">
+<h2>STEP 4: Aggregate Functions</h2>
 
 <div class="code">
 SELECT COUNT(*) FROM Students;
+SELECT AVG(Age) FROM Students;
+SELECT SUM(Salary) FROM Teachers;
+SELECT MIN(Age) FROM Students;
+SELECT MAX(Age) FROM Students;
 </div>
 
-<button onclick="showExample()">Show Explanation</button>
-<p id="aggExplain"></p>
+<h3>GROUP BY Example</h3>
+<div class="code">
+SELECT Course, COUNT(StudentID)
+FROM Enrollments
+GROUP BY Course;
 </div>
 
-<!-- TRANSACTION ANIMATION -->
+<h3>Example Output</h3>
+<table>
+<tr><th>Course</th><th>COUNT(StudentID)</th></tr>
+<tr><td>Math</td><td>12</td></tr>
+<tr><td>CS</td><td>18</td></tr>
+</table>
+</div>
+
+<!-- STEP 5 ACID -->
 <div class="page">
-<h2>💳 Transaction Simulation</h2>
-
-<button onclick="simulateTransaction()">Simulate Bank Transfer</button>
-<p id="transactionOutput"></p>
+<h2>STEP 5: ACID Properties</h2>
+<ul>
+<li><b>Atomicity</b> – All or nothing</li>
+<li><b>Consistency</b> – Data remains valid</li>
+<li><b>Isolation</b> – Transactions don’t interfere</li>
+<li><b>Durability</b> – Data saved permanently</li>
+</ul>
 </div>
 
-<!-- DOWNLOAD WORKSHEET -->
+<!-- INTERACTIVE QUIZ -->
 <div class="page">
-<h2>📥 Download Worksheet</h2>
-<button onclick="downloadWorksheet()">Download Practice Worksheet</button>
+<h2>🎯 Final Interactive Assessment</h2>
+
+<p><b>1. Which command creates a table?</b></p>
+<div class="quiz-option" onclick="check(this,false)">SELECT</div>
+<div class="quiz-option" onclick="check(this,true)">CREATE TABLE</div>
+<div class="quiz-option" onclick="check(this,false)">INSERT</div>
+
+<p id="quizResult"></p>
+
+<h3>Short Answer (10 marks)</h3>
+<ul>
+<li>Explain DDL (2 marks)</li>
+<li>Write a JOIN query (4 marks)</li>
+<li>Explain ACID (4 marks)</li>
+</ul>
+
+<h3>Mark Scheme</h3>
+<ul>
+<li>Correct definition with example = full marks</li>
+<li>Correct SQL syntax = full marks</li>
+<li>ACID fully explained = 4 marks</li>
+</ul>
 </div>
 
 <script>
-
 function toggleDark(){
-    document.body.classList.toggle("dark");
+document.body.classList.toggle("dark");
 }
 
-function checkAnswer(element, correct){
-    let options = document.querySelectorAll('.quiz-option');
-    options.forEach(o=>o.classList.remove("correct","wrong"));
-    if(correct){
-        element.classList.add("correct");
-        document.getElementById("quizResult").innerHTML="✅ Correct! SELECT retrieves data.";
-    } else {
-        element.classList.add("wrong");
-        document.getElementById("quizResult").innerHTML="❌ Try again!";
-    }
+function check(element,correct){
+let options=document.querySelectorAll('.quiz-option');
+options.forEach(o=>o.classList.remove("correct","wrong"));
+if(correct){
+element.classList.add("correct");
+document.getElementById("quizResult").innerHTML="✅ Correct!";
 }
-
-function allowDrop(ev){
-    ev.preventDefault();
+else{
+element.classList.add("wrong");
+document.getElementById("quizResult").innerHTML="❌ Try again!";
 }
-
-function drop(ev){
-    ev.preventDefault();
-    var data = ev.dataTransfer.getData("text");
 }
-
-let draggables = document.querySelectorAll('.draggable');
-draggables.forEach(item=>{
-    item.addEventListener('dragstart', e=>{
-        e.dataTransfer.setData('text/plain', item.textContent);
-    });
-});
-
-document.querySelector('.dropzone').addEventListener('drop', function(e){
-    e.preventDefault();
-    let data = e.dataTransfer.getData('text/plain');
-    this.innerHTML += " " + data;
-});
-
-function showExample(){
-    document.getElementById("aggExplain").innerHTML=
-    "COUNT(*) counts total rows in the table.";
-}
-
-function simulateTransaction(){
-    document.getElementById("transactionOutput").innerHTML=
-    "BEGIN TRANSACTION...<br>Deduct $100...<br>Add $100...<br>COMMIT ✅";
-}
-
-function downloadWorksheet(){
-    const text = "IB DP SQL Practice Worksheet\n\n1. Write a JOIN query.\n2. Use COUNT() with GROUP BY.\n3. Explain ACID properties.";
-    const blob = new Blob([text], {type: "text/plain"});
-    const link = document.createElement("a");
-    link.href = URL.createObjectURL(blob);
-    link.download = "SQL_Worksheet.txt";
-    link.click();
-}
-
 </script>
 
 </body>

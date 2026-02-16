@@ -2,47 +2,56 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>IB DP Computer Science – SQL Notes</title>
+<title>IB DP CS – SQL Interactive Notes</title>
 
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Patrick+Hand&family=Indie+Flower&display=swap');
 
 body {
     font-family: 'Patrick Hand', cursive;
-    background-color: #f7efe5;
     margin: 0;
     padding: 20px;
+    transition: 0.4s;
+    background: #f4efe6;
+}
+
+.dark {
+    background: #1e1e1e;
+    color: white;
 }
 
 .page {
     background: white;
-    padding: 40px;
+    padding: 30px;
     margin: 40px auto;
     max-width: 1000px;
     border-radius: 15px;
     box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+    animation: fadeIn 1s ease;
+}
+
+.dark .page {
+    background: #2b2b2b;
 }
 
 h1 {
     text-align: center;
     font-family: 'Indie Flower', cursive;
     font-size: 42px;
-    color: #2c3e50;
-    border-bottom: 3px solid #e74c3c;
 }
 
-h2 {
-    color: #2980b9;
-    border-bottom: 2px solid #3498db;
-    padding-bottom: 5px;
-}
-
-.box {
-    background: #fdfdfd;
-    border-left: 6px solid #3498db;
-    padding: 15px;
-    margin: 20px 0;
+button {
+    padding: 10px 20px;
+    margin: 10px;
+    border: none;
     border-radius: 8px;
+    background: #3498db;
+    color: white;
+    cursor: pointer;
+}
+
+button:hover {
+    background: #2980b9;
 }
 
 .code {
@@ -51,244 +60,166 @@ h2 {
     padding: 15px;
     border-radius: 8px;
     font-family: monospace;
-    overflow-x: auto;
 }
 
-.highlight {
-    background: #fff59d;
-    padding: 3px 6px;
-    border-radius: 5px;
-}
-
-.diagram {
+.quiz-option {
+    display: block;
+    margin: 8px 0;
+    padding: 8px;
     background: #ecf0f1;
-    padding: 20px;
-    border-radius: 10px;
-    margin: 20px 0;
-    text-align: center;
+    border-radius: 6px;
+    cursor: pointer;
 }
 
-.practice {
-    background: #e8f5e9;
+.correct { background: #2ecc71 !important; color:white;}
+.wrong { background: #e74c3c !important; color:white;}
+
+.draggable {
+    padding: 10px;
+    margin: 5px;
+    background: #f39c12;
+    border-radius: 5px;
+    display: inline-block;
+    cursor: grab;
+}
+
+.dropzone {
+    margin-top: 15px;
     padding: 20px;
-    border-radius: 10px;
-    margin-top: 30px;
+    border: 2px dashed #333;
+    min-height: 50px;
+}
+
+@keyframes fadeIn {
+    from {opacity:0; transform: translateY(20px);}
+    to {opacity:1; transform: translateY(0);}
 }
 </style>
 </head>
 
 <body>
 
+<button onclick="toggleDark()">🌙 Toggle Dark Mode</button>
+
 <div class="page">
-<h1>📘 SQL – IB DP Computer Science</h1>
-<p style="text-align:center;">A3.3.1 – A3.3.6</p>
+<h1>📘 Interactive SQL Notes</h1>
+<p style="text-align:center;">IB DP Computer Science – A3.3</p>
 </div>
 
-<!-- A3.3.1 -->
+<!-- QUIZ SECTION -->
 <div class="page">
-<h2>A3.3.1 – SQL Language Types</h2>
+<h2>🎯 Interactive Quiz</h2>
 
-<div class="box">
-<b>DQL – Data Query Language</b><br>
-Used to retrieve data.
+<p><b>Which SQL command retrieves data?</b></p>
+
+<div class="quiz-option" onclick="checkAnswer(this,false)">UPDATE</div>
+<div class="quiz-option" onclick="checkAnswer(this,true)">SELECT</div>
+<div class="quiz-option" onclick="checkAnswer(this,false)">DELETE</div>
+
+<p id="quizResult"></p>
 </div>
 
-<div class="code">
-SELECT * FROM Students;
-</div>
-
-<div class="box">
-<b>DML – Data Manipulation Language</b><br>
-Used to insert, update, delete.
-</div>
-
-<div class="code">
-INSERT INTO Students VALUES (1,'Ali');
-UPDATE Students SET Name='Sara' WHERE ID=1;
-DELETE FROM Students WHERE ID=1;
-</div>
-
-<div class="box">
-<b>DDL – Data Definition Language</b><br>
-Used to create/modify structure.
-</div>
-
-<div class="code">
-CREATE TABLE Students (
-  ID INT PRIMARY KEY,
-  Name VARCHAR(50)
-);
-</div>
-
-<div class="box">
-<b>DCL – Data Control Language</b><br>
-Used for permissions.
-</div>
-
-<div class="code">
-GRANT SELECT ON Students TO user1;
-</div>
-</div>
-
-<!-- A3.3.2 -->
+<!-- DRAG AND DROP -->
 <div class="page">
-<h2>A3.3.2 – Queries Between Two Tables</h2>
+<h2>🧩 Drag & Drop SQL Builder</h2>
 
-<div class="diagram">
-Students (StudentID, Name)<br>
-Enrollments (StudentID, Course)
+<p>Build a correct SELECT query:</p>
+
+<div class="draggable" draggable="true">SELECT</div>
+<div class="draggable" draggable="true">FROM Students</div>
+<div class="draggable" draggable="true">*</div>
+
+<div class="dropzone" ondrop="drop(event)" ondragover="allowDrop(event)">
+Drop SQL here
+</div>
 </div>
 
-<b>INNER JOIN Example:</b>
-
-<div class="code">
-SELECT Students.Name, Enrollments.Course
-FROM Students
-INNER JOIN Enrollments
-ON Students.StudentID = Enrollments.StudentID;
-</div>
-
-<p><span class="highlight">JOIN connects tables using a common key.</span></p>
-</div>
-
-<!-- A3.3.3 -->
+<!-- AGGREGATE DEMO -->
 <div class="page">
-<h2>A3.3.3 – Updating Data</h2>
-
-<b>UPDATE Example:</b>
-
-<div class="code">
-UPDATE Students
-SET Grade = 'A'
-WHERE StudentID = 1;
-</div>
-
-<b>INSERT Example:</b>
-
-<div class="code">
-INSERT INTO Students (ID, Name)
-VALUES (2, 'John');
-</div>
-
-<b>DELETE Example:</b>
-
-<div class="code">
-DELETE FROM Students WHERE ID = 2;
-</div>
-
-<p><span class="highlight">Always use WHERE to avoid changing all records!</span></p>
-</div>
-
-<!-- A3.3.4 -->
-<div class="page">
-<h2>A3.3.4 – Aggregate Functions</h2>
-
-<div class="box">
-COUNT() – counts rows<br>
-SUM() – totals values<br>
-AVG() – average<br>
-MIN() – smallest<br>
-MAX() – largest
-</div>
+<h2>📊 Aggregate Function Demo</h2>
 
 <div class="code">
 SELECT COUNT(*) FROM Students;
-
-SELECT AVG(Grade) FROM Students;
-
-SELECT SUM(Salary) FROM Teachers;
 </div>
 
-<b>GROUP BY Example:</b>
-
-<div class="code">
-SELECT Course, COUNT(StudentID)
-FROM Enrollments
-GROUP BY Course;
-</div>
+<button onclick="showExample()">Show Explanation</button>
+<p id="aggExplain"></p>
 </div>
 
-<!-- A3.3.5 -->
+<!-- TRANSACTION ANIMATION -->
 <div class="page">
-<h2>A3.3.5 – Database Views</h2>
+<h2>💳 Transaction Simulation</h2>
 
-<div class="box">
-A <b>VIEW</b> is a virtual table based on a query.
+<button onclick="simulateTransaction()">Simulate Bank Transfer</button>
+<p id="transactionOutput"></p>
 </div>
 
-<div class="code">
-CREATE VIEW TopStudents AS
-SELECT Name, Grade
-FROM Students
-WHERE Grade = 'A';
-</div>
-
-<b>Benefits:</b>
-<ul>
-<li>Security – hide sensitive data</li>
-<li>Simplifies complex queries</li>
-<li>Reusable</li>
-</ul>
-</div>
-
-<!-- A3.3.6 -->
+<!-- DOWNLOAD WORKSHEET -->
 <div class="page">
-<h2>A3.3.6 – Transactions & Data Integrity</h2>
-
-<div class="box">
-A transaction ensures operations complete fully or not at all.
+<h2>📥 Download Worksheet</h2>
+<button onclick="downloadWorksheet()">Download Practice Worksheet</button>
 </div>
 
-<div class="code">
-BEGIN TRANSACTION;
+<script>
 
-UPDATE Accounts
-SET Balance = Balance - 100
-WHERE ID = 1;
+function toggleDark(){
+    document.body.classList.toggle("dark");
+}
 
-UPDATE Accounts
-SET Balance = Balance + 100
-WHERE ID = 2;
+function checkAnswer(element, correct){
+    let options = document.querySelectorAll('.quiz-option');
+    options.forEach(o=>o.classList.remove("correct","wrong"));
+    if(correct){
+        element.classList.add("correct");
+        document.getElementById("quizResult").innerHTML="✅ Correct! SELECT retrieves data.";
+    } else {
+        element.classList.add("wrong");
+        document.getElementById("quizResult").innerHTML="❌ Try again!";
+    }
+}
 
-COMMIT;
-</div>
+function allowDrop(ev){
+    ev.preventDefault();
+}
 
-<div class="code">
-ROLLBACK;
-</div>
+function drop(ev){
+    ev.preventDefault();
+    var data = ev.dataTransfer.getData("text");
+}
 
-<b>ACID Properties:</b>
-<ul>
-<li>Atomicity</li>
-<li>Consistency</li>
-<li>Isolation</li>
-<li>Durability</li>
-</ul>
+let draggables = document.querySelectorAll('.draggable');
+draggables.forEach(item=>{
+    item.addEventListener('dragstart', e=>{
+        e.dataTransfer.setData('text/plain', item.textContent);
+    });
+});
 
-<p><span class="highlight">Transactions maintain data integrity.</span></p>
-</div>
+document.querySelector('.dropzone').addEventListener('drop', function(e){
+    e.preventDefault();
+    let data = e.dataTransfer.getData('text/plain');
+    this.innerHTML += " " + data;
+});
 
-<!-- PRACTICE -->
-<div class="page">
-<h2>🎯 Practice Activities</h2>
+function showExample(){
+    document.getElementById("aggExplain").innerHTML=
+    "COUNT(*) counts total rows in the table.";
+}
 
-<div class="practice">
-<b>1️⃣ Write a JOIN:</b><br>
-Students(StudentID, Name)<br>
-Results(StudentID, Score)<br><br>
-→ Write SQL to show Name and Score.
-</div>
+function simulateTransaction(){
+    document.getElementById("transactionOutput").innerHTML=
+    "BEGIN TRANSACTION...<br>Deduct $100...<br>Add $100...<br>COMMIT ✅";
+}
 
-<div class="practice">
-<b>2️⃣ Aggregate Challenge:</b><br>
-Find average score per course.
-</div>
+function downloadWorksheet(){
+    const text = "IB DP SQL Practice Worksheet\n\n1. Write a JOIN query.\n2. Use COUNT() with GROUP BY.\n3. Explain ACID properties.";
+    const blob = new Blob([text], {type: "text/plain"});
+    const link = document.createElement("a");
+    link.href = URL.createObjectURL(blob);
+    link.download = "SQL_Worksheet.txt";
+    link.click();
+}
 
-<div class="practice">
-<b>3️⃣ Transaction Scenario:</b><br>
-Why is COMMIT important in banking systems?
-</div>
-</div>
+</script>
 
 </body>
 </html>
